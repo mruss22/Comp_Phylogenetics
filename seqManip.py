@@ -72,8 +72,6 @@ translation_table = {
     'TGC':'C', 'TGT':'C', 'TGA':'W', 'TGG':'W'}
 
 #Taken from: http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c#SG2
-Length_trimmed_dna_sequence = len(trimmed_dna)
-print("Length of trimmed dna sequence: " + str(Length_trimmed_dna_sequence))
 
 # A function that takes dna as input and then outputs a protein sequence
 def translate_dna(dna):   
@@ -84,8 +82,10 @@ def translate_dna(dna):
 # 3 refers to step size  
     for x in range(0,618,3):
         codon = dna[x:x+3]
+#x is a placeholder, could use any variable
 # the retrieval of the aminio acid that corresponds to a codon
         aminoacid = translation_table.get(codon)
+#used the .get() method to return a value for a given key in this case .get(codon) 
 # protein gets the appropriate amino acid added to it       
         protein = protein + aminoacid
     return protein
