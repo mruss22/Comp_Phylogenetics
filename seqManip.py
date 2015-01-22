@@ -82,8 +82,8 @@ def translate_dna(dna):
 # 0 refers to starting position (python starts at 0 not 1)
 # 618 refers to the ending position ()
 # 3 refers to step size  
-    for start in range(0,618,3):
-        codon = dna[start:start+3]
+    for x in range(0,618,3):
+        codon = dna[x:x+3]
 # the retrieval of the aminio acid that corresponds to a codon
         aminoacid = translation_table.get(codon)
 # protein gets the appropriate amino acid added to it       
