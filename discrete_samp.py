@@ -27,3 +27,17 @@ print factorial
 The first time (2a) calculate all factorials fully. Now re-write the function and cancel as 
 many terms as possible so you can avoid unnecessary multiplication 
 (see the middle expression in Theorem 1.4.13)."""
+
+def binomialCoeff(n, k): # computes n choose k
+    result = 1
+    for i in range(1, k+1):
+        result = result * (n-i+1) / i
+    return result
+ 
+if __name__ == "__main__":
+    print(binomialCoeff(5, 2))
+
+"""Easier way would be to import the sympy module and use .binomial
+import sympy
+binomCoef=sympy.binomial(5, 2)
+print binomCoef"""
