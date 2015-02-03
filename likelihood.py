@@ -185,9 +185,9 @@ print "\nThe likelihood scores for these values of p are"
 print L_scores2
 
 # Find the maximum likelihood value of p (at least, the max in this set)
-maxLikeli = max(L_scores)
+maxLikeli2 = max(L_scores2)
 print "\nThe maximum likelihood value of p is"
-print maxLikeli
+print maxLikeli2
 
 # What is the strength of evidence against the most extreme values of p (0 and 1)?
 print "\nIn statistics to reject the null hypothesis at the 5% level, when the" 
