@@ -53,7 +53,6 @@ the inference blind, have a friend set this value and perform the draws from
 the Binomial for you, without revealing the value of p that they used.
 """
 from __future__ import division
-import matplotlib.pyplot as plot
 from scipy.stats import binom
 
 n = 5
