@@ -91,43 +91,11 @@ def discSamp(events,probs):
 
 # Write your Markov chain simulator below. Record the states of your chain in 
 # a list. Draw a random state to initiate the chain.
-import numpy
-
-def MarkovChain(matrix,length):
-    Mchain=[] #make an emtpy list
-    number=numpy.random.random(1)
-    states_tuple=("A","B")
-    if  number<matrix[0][0]: #individal element
-        state=states_tuple[0] #individal row
-    else: 
-        state=states_tuple[1]
-    Mchain.append(state)
-    if length ==1:
-        return Mchain 
-    else:
-        for state in MarkovChain(matrix,(length-1)): 
-            if state=="A": 
-                number=numpy.random.random(1)
-                if number<=matrix[0][0]:
-                    state=="A"
-                else:
-                    state=="B"
-            elif state=="B":
-                number=numpy.random.random(1)
-                if number<=matrix[1][1]:
-                    state=="B"
-                else:
-                    state=="A"
-            Mchain.append(state)     
-        return Mchain
 
 
 
 # Run a simulation of 10 steps and print the output.
 
-test=MarkovChain(matrix,10)
-
-print test
 
 
 # ----> Try to finish the above lines before Tues, Feb. 10th <----
