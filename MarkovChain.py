@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Feb 09 22:48:08 2015
+
 @author: Marisa_29
 """
 
@@ -91,26 +95,101 @@ def discSamp(events,probs):
 
 # Write your Markov chain simulator below. Record the states of your chain in 
 # a list. Draw a random state to initiate the chain.
+#used jembrown's Markov chain simulator
 
+matrix=[[0.5,0.5],[0.5,0.5]]
+states=('a','b')
+def dmcSim(n,st=states,allProbs=matrix):
+    """
+    This function simulates the progression of a discrete-time, discrete-state
+    Markov chain. It takes 3 arguments: (1) The number of steps (n), (2) the 
+    state space, and (3) the transition matrix. It returns a list containing 
+    the progression of states through time. This list should have length n.
+    
+    The chain will be initiated with a randomly drawn state.
+    """
+    
+    # Define list to hold chain's states
+    chain = []    
 
+    # Draw a state to initiate the chain
+    currState = discSamp(st,[1.0/len(st) for x in st])
+    chain.extend(currState)
+
+    # Simulate the chain over n-1 steps following the initial state
+    for step in range(1,n):
+        probs = allProbs[st.index(currState)] # Grabbing row associated with currState
+        currState = discSamp(st,probs) # Sample new state
+        chain.extend(currState)        
+        
+    return chain
 
 # Run a simulation of 10 steps and print the output.
 
+test=dmcSim(10,st=("a","b"),allProbs=matrix)
+print("State A count: %d" % test.count("a"))
+print("State B count: %d" % test.count("b"))
+print test
 
 
 # ----> Try to finish the above lines before Tues, Feb. 10th <----
 
 # Now try running 100 simulations of 100 steps each. How often does the chain
 # end in each state? How does this change as you change the transition matrix?
+test2=dmcSim(100,st=("a","b"),allProbs=matrix)*100
+print test2
+print("State A count: %d" % test2.count("a"))
+print("State B count: %d" % test2.count("b"))
 
+'''Run 1 = State A count: 4700
+State B count: 5300
 
+Run 2 = State A count: 5200
+State B count: 4800
 
+Run 3 = State A count: 4900
+State B count: 5100
+'''
+
+'''I changed the matrix to matrix=[[0.9,0.1],[0.4,0.6]] from matrix=[[0.5,0.5],[0.5,0.5]]
+and state a's count increased accordingly State A count: 8600
+State B count: 1400
+'''
 
 # Try defining a state space for nucleotides: A, C, G, and T. Now define a 
 # transition matrix with equal probabilities of change between states.
 
+stateSpace= ('A','C','G','T')
+matrix3 = [[0.25,0.25,0.25,0.25],[0.25,0.25,0.25,0.25],[0.25,0.25,0.25,0.25],[0.25,0.25,0.25,0.25]]
+test3=dmcSim(10,st=stateSpace,allProbs=matrix3)
+print test3
+print("State A count: %d" % test3.count("A"))
+print("State C count: %d" % test3.count("C"))
+print("State G count: %d" % test3.count("G"))
+print("State T count: %d" % test3.count("T"))
 
+'''output 1: 
+['A', 'G', 'A', 'C', 'C', 'C', 'T', 'G', 'C', 'A']
+State A count: 3
+State C count: 4
+State G count: 2
+State T count: 1
+'''
 
-         
 # Again, run 100 simulations of 100 steps and look at the ending states. Then
 # try changing the transition matrix.
+stateSpace= ('A','C','G','T')
+probs = [[0.25,0.25,0.25,0.25],[0.25,0.25,0.25,0.25],[0.25,0.25,0.25,0.25],[0.25,0.25,0.25,0.25]]
+test4=dmcSim(100,st=stateSpace,allProbs=probs)*100
+print test4
+print("State A count: %d" % test4.count("A"))
+print("State C count: %d" % test4.count("C"))
+print("State G count: %d" % test4.count("G"))
+print("State T count: %d" % test4.count("T"))
+
+'''output 1
+State A count: 2600
+State C count: 2600
+State G count: 2400
+State T count: 2400
+'''
