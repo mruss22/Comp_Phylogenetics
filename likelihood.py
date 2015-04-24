@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Feb 03 08:28:39 2015
 
 @author: Marisa_29
 """
@@ -92,7 +95,7 @@ def factorial(max,min):
     return product
 
 def binCoeff3(n,k):
-    '''This function calculates the binomial coefficient for two integers n and k.'''
+    '''This function calculates the binomial coefficient for two integers n and k in a more concise way.'''
     if k > n: #establishes the value of the binomial coefficient if k > n
         return 0
     else: #calculates the binomial coefficient by cancelling out the common terms in both parts of the division
@@ -111,13 +114,13 @@ Now we need to calculate likelihoods for a series of different values for p to
 compare likelihoods. There are an infinite number of possible values for p, so 
 let's confine ourselves to steps of 0.05 between 0 and 1.
 """
-#for loops will work best throughout the excercise
+
 # Set up a list with all relevant values of p
 p_rel = []
 for i in range(0,105,5):    #cannot use 0,1,0.05 the program will treat 0.05 as a float
     x=i/100.0
     p_rel.append(x)
-    #The method append adds its parameter as a single element to the list, 
+    #append adds its parameter as a single element to the list, 
     #while extend gets a list and adds its content
 print "\nAll relevant values of p are"
 print p_rel
@@ -206,3 +209,73 @@ print likelihood_ratios
 # When is the ratio small enough to reject some values of p?
 print "\n the ratio is small enough to reject some values of p when the p-value is less than 0.05"
 # Note: You will empirically investigate this on your own later in this exercise.
+
+"""
+Sometimes it will not be feasible or efficient to calculate the likelihoods for every
+value of a parameter in which we're interested. Also, that approach can lead to large
+gaps between relevant values of the parameter. Instead, we'd like to have a 'hill
+climbing' function that starts with some arbitrary value of the parameter and finds
+values with progressively better likelihood scores. This is an ML optimization
+function. There has been a lot of work on the best way to do this. We're going to try
+a fairly simple approach that should still work pretty well, as long as our likelihood 
+surface is unimodal (has just one peak). Our algorithm will be:
+(1) Calculate the likelihood for our starting parameter value (we'll call this pCurr)
+(2) Calculate likelihoods for the two parameter values above (pUp) and below (pDown)
+our current value by some amount (diff). So, pUp=pCurr+diff and pDown=pCurr-diff. To
+start, set diff=0.1, although it would be nice to allow this initial value to be set
+as an argument of our optimization function.
+(3) If either pUp or pDown has a better likelihood than pCurr, change pCurr to this
+value. Then repeat (1)-(3) until pCurr has a higher likelihood than both pUp and
+pDown.
+(4) Once L(pCurr) > L(pUp) and L(pCurr) > L(pDown), reduce diff by 1/2. Then repeat
+(1)-(3).
+(5) Repeat (1)-(4) until diff is less than some threshold (say, 0.001).
+(6) Return the final optimized parameter value.
+Write a function that takes some starting p value and observed data (k,n) for a
+binomial as its arguments and returns the ML value for p.
+To write this function, you will probably want to use while loops. The structure of
+these loops is
+while (someCondition):
+    code line 1 inside loop
+    code line 2 inside loop
+    
+As long as the condition remains True, the loop will continue executing. If the
+condition isn't met (someCondition=False) when the loop is first encountered, the 
+code inside will never execute.
+If you understand recursion, you can use it to save some lines in this code, but it's
+not necessary to create a working function.
+"""
+
+# Write a function that finds the ML value of p for a binomial, given k and n.
+def p_optimize(k, n, pCurr):
+    diff=0.1    
+    pCurr= 0.5
+    pCurr = binomPMF(k, n, pCurr)
+    pUp = pCurr + diff
+    pDown = pCurr - diff
+    binpCurr = binomPMF(k, n, pCurr)
+    binpUp = binomPMF(k, n, pUp)
+    binpDown = binomPMF(k, n, pDown)
+    while diff > 0.001:
+        while diff > 0.001:  
+                
+            if binpCurr < binpUp:
+                pCurr = pUp
+                binpCurr = binomPMF(k, n, pCurr)
+                pUp = pCurr + diff
+                binpUp = binomPMF(k, n, pUp)
+                                
+            elif binpCurr > binpDown:
+                pCurr = pDown
+                binpCurr = binomPMF(k, n, pCurr)
+                pDown = pCurr - diff
+                binpDown = binomPMF(k, n, pDown)
+
+            else:
+                diff *= 0.5
+                #return insideloop()
+        return pCurr
+        
+p=p_optimize(4,5,0.5)
+print "\nThe p value associated with the max likelihood value is"
+print p
