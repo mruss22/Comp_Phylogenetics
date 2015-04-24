@@ -163,23 +163,3 @@ def mcStateFreqSum(sims,state="a"):
 
 # Run replicate simulations 
 listList = [['a','a','b'], ['a','b','b'], ['a','b','b'], ['a','a','a']]
-
-
-    
-# Summarize the frequency of one state through time
-
-
-
-
-# What do you notice about the state frequencies through time? Try another round
-# of simulations with a different transition matrix. How do the state freq.
-# values change?
-
-
-
-
-
-
-# Now, calculate a vector of probabilities for the focal state (e.g., 'a')
-# based on the transition matrix directly (not by simulation). How do these
-# values compare to the simulated frequencies?
