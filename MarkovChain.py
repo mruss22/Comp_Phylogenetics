@@ -75,6 +75,22 @@ function to draw one of your states based on this random number.
 import scipy
 
 # Paste or import your discrete sampling function
+
+def DiscreteSamp(events,probabilities):    
+    import random
+    x= random.choice(events) #chooses a random number from eventlist 
+    index=events.index(x)
+    #this indexes the random events 
+    probability=probabilities[index]
+    #this is the probabilities of the events given 
+    
+    return "this is the event", x, "and this is the probability", probability
+    
+eventlist=["1","2","3","4","5"]#the lists must be the same length
+problist=[.15,.45,.25,.05,.1]#events sum to 1
+print DiscreteSamp(eventlist,problist)
+
+#jembrown code below (works much better than mine)
 def discSamp(events,probs):
     """
     This function samples from a list of discrete events provided in the events argument, using the event
